@@ -1,0 +1,19 @@
+{
+  "name": "restify-codecasts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "mysql": "^2.16.0",
+    "restify": "^7.2.1",
+    "restify-cors-middleware": "^1.1.1"
+  }
+}
