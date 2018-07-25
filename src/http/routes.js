@@ -1,8 +1,5 @@
 const db = require('../services/mysql')
 
-// db.categories().update(id, name)
-// db.categories().del(id)
-
 const routes = (server) =>  {
 
 	server.get('/categorias', async (req, res, next) => {
@@ -47,10 +44,61 @@ const routes = (server) =>  {
 		}
 		next()		
 	})
-    
-	server.get('/', (req, res, next) => {
-		res.send('Enjoy the silence?')
+	
+	
+	//====================================
+	server.get('/users', async (req, res, next) => {
+		try {
+			res.send(await db.users().all())
+		}
+		catch( error ) {
+			res.send(error)
+		}
 		next()
+	})
+
+	server.post('/users', async (req, res, next) => {
+		try{
+			const { email, password } = req.params
+			res.send(await db.users().save(email, password))
+		}
+		catch( error ) {
+			res.send(error)
+		}
+		next()		
+	})
+
+	server.put('/users', async (req, res, next) => {
+		try{
+			const { id, password } = req.params
+			res.send(await db.users().update(id, password))
+		}
+		catch( error ) {
+			res.send(error)
+		}
+		next()		
+	})
+
+	server.del('/users', async (req, res, next) => {
+		try{
+			const { id } = req.params
+			res.send(await db.users().del(id))
+		}
+		catch( error ) {
+			res.send(error)
+		}
+		next()		
+	})
+	
+	//====================================
+	server.post('/authenticate', async (req, res, next) => {
+		try{
+			const { email, password} = req.params
+			res.send(await db.auth().authenticate())
+		}
+		catch( error) {
+			res.send(error)
+		}
 	})
 
 }
