@@ -7,17 +7,12 @@ const connection = mysqlServer.createConnection({
 	database: 'codecast'
 })
 
-const categories = new Promise( (resolve, reject) => {
-	connection.query('SELECT * FROM categories', (error, results) => {
-		if(error) {
-			reject(error)
-		}
-		else {
-			resolve({categories: results})
-		}
-	})    
-})
+const errorHandler = (error, msg, rejectFunction) => {
+    console.log(error)
+	rejectFunction( { error: msg })
+}
+const categoryModule = require('./categories')({ connection, errorHandler })
 
-
-
-module.exports = categories
+module.exports = {
+	categories: () => categoryModule
+}
