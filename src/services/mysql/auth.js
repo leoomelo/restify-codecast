@@ -1,4 +1,5 @@
 const sha1 = require('sha1')
+const jwt = require('jsonwebtoken')
 
 const auth = deps => {
 	return {
@@ -8,14 +9,17 @@ const auth = deps => {
 				const queryString = 'SELECT id, email FROM users WHERE email = ? AND password = ?'
 				const queryData = [email, sha1(password)]
 
-				connection.query(queryString, queryData), (error, results) => {
-                    
-					if(error || !results.length) {
+				connection.query(queryString, queryData, (error, results) => {
+					if(error || !results.length ) {
 						errorHandler(error, 'Falha ao localizar o usuário', reject)
 						return false
-                    }
-                    resolve( {token: 'asdfasdf'})
-				}
+					}
+					const { email, id } = results[0]
+					const token = jwt.sign({email, id}, process.env.JWT_TOKEN_KEY, { expiresIn: 60 * 60 * 24 })
+					resolve( {token})
+                    
+                    
+				})
 			})
 		}
 	}

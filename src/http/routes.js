@@ -94,11 +94,12 @@ const routes = (server) =>  {
 	server.post('/authenticate', async (req, res, next) => {
 		try{
 			const { email, password} = req.params
-			res.send(await db.auth().authenticate())
+			res.send(await db.auth().authenticate(email, password))
 		}
 		catch( error) {
 			res.send(error)
 		}
+		next()
 	})
 
 }

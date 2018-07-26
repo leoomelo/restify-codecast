@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.2.0",
+    "jsonwebtoken": "^8.3.0",
     "mysql": "^2.16.0",
     "restify": "^7.2.1",
     "restify-cors-middleware": "^1.1.1",
